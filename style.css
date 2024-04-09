@@ -1,0 +1,47 @@
+.bar {
+    position:absolute;
+    bottom:0;
+    width: 100vw;
+    display: flex;
+    padding: 26px 22px;
+    flex-direction: column;
+    align-items: flex-start;
+    /* gap: 20px; */
+    background: #CF202E;
+}
+.progressBackground {
+    width: 100%;
+    display: flex;
+    padding: 4px 5px;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+    border-radius: 52px;
+    background: #AC152C;    
+}
+
+.progressBar {
+    width: 25%;
+    height: 26px;
+    border-radius: 26px;
+    background: #FFF;
+}
+.bar p {
+    color: #FFF;
+
+    font-family: "Museo Sans Rounded";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+#sketch {
+    /* position: absolute; */
+    /* width: 100vw; */
+    /* height: 100vh; */
+}
+body {
+  /* position: relative; */
+  padding: 0; 
+  margin: 0;
+}
