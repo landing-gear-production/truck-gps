@@ -7,11 +7,11 @@ let y = 848;
 let r = 0.28225;
 let w = 2024;
 let h = 1024;
-let editMode = false;
-let fakeDataMode = false;
+let editMode = true;
+let fakeDataMode = true;
 let isGettingData = false;
 let currentPosition;
-
+let totalLength;
 // let a, b, c, d;
 function preload() {
   bg = loadImage("map_square.png");
@@ -28,6 +28,7 @@ function setup() {
   }
   points.push({x: oldPoints[Object.keys(oldPoints).length-1].x, z: oldPoints[Object.keys(oldPoints).length-1].z, heading: oldPoints[Object.keys(oldPoints).length-1].heading});
   print("Path shortened from " + Object.keys(oldPoints).length, "to " + Object.keys(points).length)
+  totalLength = lengthOfPoints(points);
   pixelDensity(1);
   let c = createCanvas(windowWidth, windowHeight);
   c.parent("sketch");
@@ -63,8 +64,9 @@ function setup() {
   
   if (!fakeDataMode) {
     getData();
-    currentPosition = createVector(points[0].x, points[0].z, points[0].heading);
+    
   }
+  currentPosition = createVector(points[0].x, points[0].z, points[0].heading);
   // getData();
 }
 
@@ -81,14 +83,13 @@ function draw() {
   fill(255, 0, 0);
 
   //apply transformations for map
-  let closestIndex = nearestPoint();
-  let progression = nearestPoint() / (Object.keys(points).length);
+  
   push();
     if (editMode) {
-      x = inputX.value();
-      y = inputY.value();
-      r = inputRotation.value()/512*2*Math.PI;
-      s = 5 * inputScale.value()/255;
+      // x = inputX.value();
+      // y = inputY.value();
+      // r = inputRotation.value()/512*2*Math.PI;
+      // s = 5 * inputScale.value()/255;
     }
     
     let progress = floor(inputProgress.value()/255 * (Object.keys(points).length-1));
@@ -99,12 +100,14 @@ function draw() {
     if (!fakeDataMode) {
       centerPoint = createVector(-currentPosition.x, -currentPosition.z, currentPosition.heading);
     }
-    if (fakeDataMode) {
-      currentPosition = centerPoint;
+    else {
+      currentPosition = createVector(points[progress].x, points[progress].z, points[progress].heading);
     }
     translate(width/2, height/2);
     rotate(centerPoint.z* PI *2);
-
+    let closestIndex = nearestPoint();
+    let progression = nearestPoint() / (Object.keys(points).length);
+    print(progression);
     //align map
     push();
       translate(first.x, first.y);
@@ -117,29 +120,50 @@ function draw() {
       image(bg, 0, 0, 1024, 1024);
     pop();
 
-    //draw path
     push()
       noFill();
       stroke("#CF202E");
-      strokeWeight(10);
+      strokeWeight(20);
       beginShape();
       for (let i = 0; i < Object.keys(points).length; i++) {
         let p = createVector(points[i].x, points[i].z);
         p.add(centerPoint);
         
-        push();
+        // push();
           // translate(p.x, p.y);
           vertex(p.x, p.y);
-        pop();
+        // pop();
       }
+      
       endShape(); 
     pop();
-    // let p = createVector(points[closestIndex].x, points[closestIndex].z);
-    // p.add(centerPoint);
-    // ellipse(p.x, p.y, 100, 100);
+
+    //draw path
+    push()
+      noFill();
+      stroke("#F1AE33");
+      strokeWeight(20);
+      beginShape();
+      for (let i = 0; i < closestIndex; i++) {
+        let p = createVector(points[i].x, points[i].z);
+        p.add(centerPoint);
+        
+        // push();
+          // translate(p.x, p.y);
+          vertex(p.x, p.y);
+        // pop();
+      }
+      vertex(centerPoint.x + currentPosition.x, centerPoint.y + currentPosition.y)
+      endShape(); 
+    pop();
+
   pop();
   
   //draw UI
+  let bar = document.getElementById("progressBar");
+  bar.style.width = "" + (map(progression, 0, 1, 2, 100)) + "%";
+  let distanceP = document.getElementById("distance");
+  distanceP.innerHTML = "Distance left: " + Math.round(map(progression, 1, 0, 0, totalLength) * 0.000621371 * 100)/100 + " miles";
   imageMode(CENTER);
   image(arrow, width/2, height/2);
   if (editMode) {
@@ -211,13 +235,19 @@ function downloadAsJSON (filename) {
     a.click();
 
 }
-
+function lengthOfPoints () {
+  let length = 0;
+  for (let i = 0; i < Object.keys(points).length - 1; i++) {
+    length += dist(points[i].x, points[i].z, points[i+1].x, points[i+1].z);
+  }
+  return length;
+}
 function nearestPoint () {
   // takes player position and returns nearst point to path
   let min = 100000000;
   let index = -1;
   for (let i = 0; i < Object.keys(points).length; i++) {
-    let d = dist(points[i].x, points[i].z, currentPosition.x, currentPosition.z);
+    let d = dist(points[i].x, points[i].z, currentPosition.x, currentPosition.y);
     if (d < min) {
       min = d;
       index = i;
