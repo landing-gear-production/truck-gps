@@ -72,7 +72,6 @@ function setup() {
 
 function draw() {
   if (!isGettingData && !fakeDataMode) {
-
     getData();
   }
   
@@ -221,7 +220,7 @@ function getData () {
   })
   .then(data => {
     isGettingData = false;
-    // print(data);
+    print(data);
     currentPosition = data.truck.placement;
   })
   .catch(error => console.error('There was a problem fetching the data:', error));
