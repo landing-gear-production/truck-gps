@@ -7,8 +7,8 @@ let y = 848;
 let r = 0.28225;
 let w = 2024;
 let h = 1024;
-let editMode = true;
-let fakeDataMode = true;
+let editMode = false;
+let fakeDataMode = false;
 let isGettingData = false;
 let currentPosition;
 let totalLength;
@@ -33,7 +33,7 @@ function setup() {
   let c = createCanvas(windowWidth, windowHeight);
   c.parent("sketch");
   inputURL = createInput();
-  inputURL.value("http://172.26.92.202:25555/api/ets2/telemetry");
+  inputURL.value("http://192.168.100.190:25556/proxy/api/ets2/telemetry");
   inputURL.position(100, 50);
   inputURL.size(500);
 
@@ -221,6 +221,7 @@ function getData () {
   })
   .then(data => {
     isGettingData = false;
+    // print(data);
     currentPosition = data.truck.placement;
   })
   .catch(error => console.error('There was a problem fetching the data:', error));
