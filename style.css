@@ -1,3 +1,71 @@
+
+  
+@font-face {
+    font-family: MuseoSans-100;
+    src: url(/dist/fonts/fontspring/webfonts/MuseoSans_100-webfont.woff) format("woff"), url(/dist/fonts/fontspring/webfonts/MuseoSans_100-webfont.woff2) format("woff2"); }
+  
+  @font-face {
+    font-family: MuseoSans-100Italic;
+    src: url(/dist/fonts/fontspring/webfonts/MuseoSans_100_Italic-webfont.woff) format("woff"), url(/dist/fonts/fontspring/webfonts/MuseoSans_100_Italic-webfont.woff2) format("woff2"); }
+  
+  @font-face {
+    font-family: MuseoSans;
+    src: url(/dist/fonts/fontspring/webfonts/MuseoSans_300-webfont.woff) format("woff"), url(/dist/fonts/fontspring/webfonts/MuseoSans_300-webfont.woff2) format("woff2");
+    font-weight: normal;
+    font-style: normal; }
+  
+  @font-face {
+    font-family: MuseoSans;
+    src: url(/dist/fonts/fontspring/webfonts/MuseoSans_300_Italic-webfont.woff) format("woff"), url(/dist/fonts/fontspring/webfonts/MuseoSans_300_Italic-webfont.woff2) format("woff2");
+    font-weight: normal;
+    font-style: italic; }
+  
+  @font-face {
+    font-family: MuseoSans-500;
+    src: url(/dist/fonts/fontspring/webfonts/MuseoSans_500-webfont.woff) format("woff"), url(/dist/fonts/fontspring/webfonts/MuseoSans_500-webfont.woff2) format("woff2"); }
+  
+  @font-face {
+    font-family: MuseoSans-500Italic;
+    src: url(/dist/fonts/fontspring/webfonts/MuseoSans_500_Italic-webfont.woff) format("woff"), url(/dist/fonts/fontspring/webfonts/MuseoSans_500_Italic-webfont.woff2) format("woff2"); }
+  
+  @font-face {
+    font-family: MuseoSans-700;
+    src: url(/dist/fonts/fontspring/webfonts/MuseoSans_700-webfont.woff) format("woff"), url(/dist/fonts/fontspring/webfonts/MuseoSans_700-webfont.woff2) format("woff2");
+    font-weight: bold;
+    font-style: normal; }
+  
+  @font-face {
+    font-family: MuseoSans-700Italic;
+    src: url(/dist/fonts/fontspring/webfonts/MuseoSans_700_Italic-webfont.woff) format("woff"), url(/dist/fonts/fontspring/webfonts/MuseoSans_700_Italic-webfont.woff2) format("woff2");
+    font-weight: bold;
+    font-style: italic; }
+  
+  @font-face {
+    font-family: MuseoSans-900;
+    src: url(/dist/fonts/fontspring/webfonts/MuseoSans_900-webfont.woff) format("woff"), url(/dist/fonts/fontspring/webfonts/MuseoSans_900-webfont.woff2) format("woff2"); }
+  
+  @font-face {
+    font-family: MuseoSans-900Italic;
+    src: url(/dist/fonts/fontspring/webfonts/MuseoSans_900_Italic-webfont.woff) format("woff"), url(/dist/fonts/fontspring/webfonts/MuseoSans_900_Italic-webfont.woff2) format("woff2"); }
+  
+  @font-face {
+    font-family: MuseoSlab-700;
+    src: url(/dist/fonts/fontspring/webfonts/Museo_Slab_700-webfont.woff) format("woff"), url(/dist/fonts/fontspring/webfonts/Museo_Slab_700-webfont.woff2) format("woff2"); }
+  
+  @font-face {
+    font-family: MuseoSlab-700Italic;
+    src: url(/dist/fonts/fontspring/webfonts/Museo_Slab_700italic-webfont.woff) format("woff"), url(/dist/fonts/fontspring/webfonts/Museo_Slab_700italic-webfont.woff2) format("woff2"); }
+  
+  @font-face {
+    font-family: MuseoSlab-900;
+    src: url(/dist/fonts/fontspring/webfonts/Museo_Slab_900-webfont.woff) format("woff"), url(/dist/fonts/fontspring/webfonts/Museo_Slab_900-webfont.woff2) format("woff2"); }
+  
+  @font-face {
+    font-family: MuseoSlab-900Italic;
+    src: url(/dist/fonts/fontspring/webfonts/Museo_Slab_900italic-webfont.woff) format("woff"), url(/dist/fonts/fontspring/webfonts/Museo_Slab_900italic-webfont.woff2) format("woff2"); }
+  
+
+
 .bar {
     position: absolute;
     bottom: 0;
@@ -48,7 +116,7 @@ height: 70px;
 .bar p {
     color: #FFF;
 
-    font-family: "Museo Sans Rounded";
+    font-family: "MuseoSans-500";
     font-size: 32px;
     font-style: normal;
     font-weight: 400;
