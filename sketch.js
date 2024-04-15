@@ -94,6 +94,7 @@ function draw() {
     let progress = floor(inputProgress.value()/255 * (Object.keys(points).length-1));
     
     let first = createVector(points[0].x, points[0].z, points[0].heading);
+
     let centerPoint = createVector(-points[progress].x, -points[progress].z, points[progress].heading);
 
     if (!fakeDataMode) {
@@ -106,7 +107,7 @@ function draw() {
     rotate(centerPoint.z* PI *2);
     let closestIndex = nearestPoint();
     let progression = nearestPoint() / (Object.keys(points).length);
-    print(progression);
+    // print(progression);
     //align map
     push();
       translate(first.x, first.y);
@@ -152,7 +153,7 @@ function draw() {
           vertex(p.x, p.y);
         // pop();
       }
-      vertex(centerPoint.x + currentPosition.x, centerPoint.y + currentPosition.y)
+      vertex(centerPoint.x + currentPosition.x, centerPoint.z + currentPosition.y)
       endShape(); 
     pop();
 
@@ -209,7 +210,7 @@ function mousePressed() {
 }
 
 function getData () {
-  print("fetching data")
+  // print("fetching data")
   isGettingData = true;
   fetch(inputURL.value())
   .then(response => {
@@ -220,7 +221,7 @@ function getData () {
   })
   .then(data => {
     isGettingData = false;
-    print(data);
+    // print(data);
     currentPosition = data.truck.placement;
   })
   .catch(error => console.error('There was a problem fetching the data:', error));
@@ -246,8 +247,8 @@ function nearestPoint () {
   // takes player position and returns nearst point to path
   let min = 100000000;
   let index = -1;
-  for (let i = 0; i < Object.keys(points).length; i++) {
-    let d = dist(points[i].x, points[i].z, currentPosition.x, currentPosition.y);
+  for (let i = 0; i < points.length; i++) {
+    let d = dist(points[i].x, points[i].z, currentPosition.x, currentPosition.z);
     if (d < min) {
       min = d;
       index = i;
