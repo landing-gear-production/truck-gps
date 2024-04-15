@@ -94,12 +94,8 @@ function draw() {
     let progress = floor(inputProgress.value()/255 * (Object.keys(points).length-1));
     
     let first = createVector(points[0].x, points[0].z, points[0].heading);
-<<<<<<< HEAD
 
     let centerPoint = createVector(-points[progress].x, -points[progress].z, points[progress].heading);
-=======
-    let centerPoint;
->>>>>>> 9d95139 (fixed font and possibly fixed yellow line)
 
     if (!fakeDataMode) {
       centerPoint = createVector(-currentPosition.x, -currentPosition.z, currentPosition.heading);
