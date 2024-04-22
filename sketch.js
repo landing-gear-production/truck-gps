@@ -33,7 +33,7 @@ function setup() {
   let c = createCanvas(windowWidth, windowHeight);
   c.parent("sketch");
   inputURL = createInput();
-  inputURL.value("http://192.168.100.190:25556/proxy/api/ets2/telemetry");
+  inputURL.value("https://truck.outlandnish.com/api/ets2/telemetry");
   inputURL.position(100, 50);
   inputURL.size(500);
 
