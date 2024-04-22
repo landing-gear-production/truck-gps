@@ -33,7 +33,7 @@ function setup() {
   let c = createCanvas(windowWidth, windowHeight);
   c.parent("sketch");
   inputURL = createInput();
-  inputURL.value("http://192.168.100.190:25556/proxy/api/ets2/telemetry");
+  inputURL.value("https://truck.outlandnish.com/api/ets2/telemetry");
   inputURL.position(100, 50);
   inputURL.size(500);
 
@@ -102,6 +102,7 @@ function draw() {
     }
     else {
       currentPosition = createVector(points[progress].x, points[progress].z, points[progress].heading);
+      centerPoint = createVector(-currentPosition.x, -currentPosition.y, currentPosition.z);
     }
     translate(width/2, height/2);
     rotate(centerPoint.z* PI *2);
