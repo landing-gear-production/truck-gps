@@ -71,19 +71,6 @@ let instructions = {
   ]
 }
 
-
-/*
-  EXIT RIGHT ;[22/04/2024 11:36:48] (sec-0029-0004);-112449;19.3603;-15290.2;-2.21323;-0.0128223
-  STAY RIGHT ;[22/04/2024 11:37:49] (sec-0029-0004);-112220;9.56971;-15527.2;-0.742045;-0.0194333
-  KEEP STRAIGHT AND THEN TURN RIGHT ;[22/04/2024 11:38:08] (sec-0028-0004);-111983;8.56942;-15678.6;-1.12192;-0.0174042
-  EXIT RIGHT ;[22/04/2024 11:40:36] (sec-0028-0004);-111700;8.58365;-15836.2;-1.03748;-0.0171914
-  STAY LEFT ;[22/04/2024 11:41:05] (sec-0028-0004);-111587;17.435;-15899.1;0.299823;-0.0167947
-  EXIT RIGHT ;[22/04/2024 11:41:42] (sec-0028-0005);-111885;13.2781;-16718.7;0.518636;-0.017075
-  TURN RIGHT ;[22/04/2024 11:41:59] (sec-0028-0005);-111998;20.0054;-17035.3;0.457219;-0.0045948
-YOU HAVE REACHED YOUR DESTINATION ;[22/04/2024 11:42:19] (sec-0028-0005);-111948;20.2882;-17118.2;-0.980794;-0.0175563
-
-*/
-// let a, b, c, d;
 function preload() {
   bg = loadImage("map_square.png");
   arrow = loadImage("arrow.png");
@@ -179,7 +166,6 @@ function draw() {
     rotate(centerPoint.z* PI *2);
     let closestIndex = nearestPoint();
     let progression = nearestPoint() / (Object.keys(points).length);
-    print(progression);
     //align map
     push();
       translate(first.x, first.y);
@@ -218,6 +204,7 @@ function draw() {
       beginShape();
       for (let i = 0; i < closestIndex; i++) {
         let p = createVector(points[i].x, points[i].z);
+        
         p.add(centerPoint);
         
         // push();
@@ -237,12 +224,15 @@ function draw() {
         circle(p.x, p.y, 10);
 
       })
-      let closestInstruction = instructions.data[nearestGPS()]
+      let nearestGPSindex = nearestGPS();
+      let closestInstruction = instructions.data[nearestGPSindex]
       let d = dist(closestInstruction.x, closestInstruction.y, currentPosition.x, currentPosition.y);
-      if (d < 5) {
-        closestInstruction.done = true
+      if (d < 20) {
+        instructions.data[nearestGPSindex].done = true
+        if (nearestGPSindex == Object.keys(instructions.data).length-1) {
+          resetProgress()
+        }
       }
-      print(nearestGPS(), closestInstruction)
       fill("red")
       circle(closestInstruction.x + centerPoint.x, closestInstruction.y+ centerPoint.y, 10);
     pop()
@@ -283,11 +273,23 @@ function draw() {
   }
 }
 
+function resetProgress () {
+  print("finished")
+  instructions.data.forEach((instruction, i) => {
+    instruction.done = false
+
+  })
+  
+}
+
 function keyPressed() {
   // if (key == 's' || key == 'S') {
   //   const date = new Date();
   //   downloadAsJSON("points" + date.getDate() + ".json");
   // }
+  if (key == 'r'){
+    resetProgress();
+  }
   if (key == 'e'){
     editMode = !editMode;
   }
