@@ -7,8 +7,8 @@ let y = 848;
 let r = 0.28225;
 let w = 2024;
 let h = 1024;
-let editMode = true;
-let fakeDataMode = true;
+let editMode = false;
+let fakeDataMode = false;
 let isGettingData = false;
 let currentPosition;
 let totalLength;
@@ -104,7 +104,7 @@ function setup() {
   let c = createCanvas(windowWidth, windowHeight);
   c.parent("sketch");
   inputURL = createInput();
-  inputURL.value("http://172.26.92.202:25555/api/ets2/telemetry");
+  inputURL.value("https://truck.outlandnish.com/api/ets2/telemetry");
   inputURL.position(100, 50);
   inputURL.size(500);
 
@@ -143,7 +143,6 @@ function setup() {
 
 function draw() {
   if (!isGettingData && !fakeDataMode) {
-
     getData();
   }
   
@@ -166,6 +165,7 @@ function draw() {
     let progress = floor(inputProgress.value()/255 * (Object.keys(points).length-1));
     
     let first = createVector(points[0].x, points[0].z, points[0].heading);
+
     let centerPoint;
 
     if (!fakeDataMode) {
@@ -179,6 +179,7 @@ function draw() {
     rotate(centerPoint.z* PI *2);
     let closestIndex = nearestPoint();
     let progression = nearestPoint() / (Object.keys(points).length);
+    print(progression);
     //align map
     push();
       translate(first.x, first.y);
@@ -224,7 +225,7 @@ function draw() {
           vertex(p.x, p.y);
         // pop();
       }
-      vertex(centerPoint.x + currentPosition.x, centerPoint.y + currentPosition.y)
+      vertex(centerPoint.x + currentPosition.x, centerPoint.z + currentPosition.y)
       endShape(); 
     pop();
 
@@ -299,7 +300,7 @@ function mousePressed() {
 }
 
 function getData () {
-  print("fetching data")
+  // print("fetching data")
   isGettingData = true;
   fetch(inputURL.value())
   .then(response => {
@@ -310,6 +311,7 @@ function getData () {
   })
   .then(data => {
     isGettingData = false;
+    // print(data);
     currentPosition = data.truck.placement;
   })
   .catch(error => console.error('There was a problem fetching the data:', error));
@@ -335,8 +337,8 @@ function nearestPoint () {
   // takes player position and returns nearst point to path
   let min = 100000000;
   let index = -1;
-  for (let i = 0; i < Object.keys(points).length; i++) {
-    let d = dist(points[i].x, points[i].z, currentPosition.x, currentPosition.y);
+  for (let i = 0; i < points.length; i++) {
+    let d = dist(points[i].x, points[i].z, currentPosition.x, currentPosition.z);
     if (d < min) {
       min = d;
       index = i;
