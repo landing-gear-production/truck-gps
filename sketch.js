@@ -16,56 +16,56 @@ let totalLength;
 let instructions = {
   "data": [
     {
-      "instruction" : "TURN RIGHT ONTO THE ROAD",
+      "instruction": "TURN RIGHT ONTO THE ROAD",
       "x": -112699,
       "y": -15421.2,
       "done": false
     },
     {
-      "instruction" : "TURN RIGHT ONTO THE ROAD",
+      "instruction": "TURN RIGHT ONTO THE ROAD",
       "x": -112642,
       "y": -15425.3,
       "done": false
     },
     {
-      "instruction" : "EXIT RIGHT",
+      "instruction": "EXIT RIGHT",
       "x": -112449,
       "y": -15290.2,
       "done": false
     },
     {
-      "instruction" : "KEEP STRAIGHT AND THEN TURN RIGHT",
+      "instruction": "KEEP STRAIGHT AND THEN TURN RIGHT",
       "x": -111983,
       "y": -15678.6,
       "done": false
     },
     {
-      "instruction" : "EXIT RIGHT",
+      "instruction": "EXIT RIGHT",
       "x": -111700,
       "y": -15836.2,
       "done": false
     },
     {
-      "instruction" : "STAY LEFT",
+      "instruction": "STAY LEFT",
       "x": -111587,
       "y": -15899.1,
       "done": false
     },
     {
-      "instruction" : "EXIT RIGHT",
+      "instruction": "EXIT RIGHT",
       "x": -111885,
       "y": -16718.7,
       "done": false
     },
     {
-      "instruction" : "TURN RIGHT",
+      "instruction": "TURN RIGHT",
       "x": -111998,
-      "y": -17035.3 
+      "y": -17035.3
     },
     {
-      "instruction" : "YOU HAVE REACHED YOUR DESTINATION",
+      "instruction": "YOU HAVE REACHED YOUR DESTINATION",
       "x": -111948,
-      "y": -17118.2 ,
+      "y": -17118.2,
       "done": false
     },
   ]
@@ -153,30 +153,30 @@ function draw() {
 
   let first = createVector(points[0].x, points[0].z, points[0].heading);
 
-    let centerPoint;
+  let centerPoint = createVector(-points[progress].x, -points[progress].z, points[progress].heading);
 
-    if (!fakeDataMode) {
-      centerPoint = createVector(-currentPosition.x, -currentPosition.z, currentPosition.heading);
-    }
-    else {
-      currentPosition = createVector(points[progress].x, points[progress].z, points[progress].heading);
-      centerPoint = createVector(-currentPosition.x, -currentPosition.y, currentPosition.z);
-    }
-    translate(width/2, height/2);
-    rotate(centerPoint.z* PI *2);
-    let closestIndex = nearestPoint();
-    let progression = nearestPoint() / (Object.keys(points).length);
-    //align map
-    push();
-      translate(first.x, first.y);
-      translate(centerPoint.x, centerPoint.y);
-      scale(s);
-      rotate(r);
-      translate(-x,-y);
-      
-      imageMode(CORNER);
-      image(bg, 0, 0, 1024, 1024);
-    pop();
+  if (!fakeDataMode) {
+    centerPoint = createVector(-currentPosition.x, -currentPosition.z, currentPosition.heading);
+  }
+  else {
+    currentPosition = createVector(points[progress].x, points[progress].z, points[progress].heading);
+    centerPoint = createVector(-currentPosition.x, -currentPosition.y, currentPosition.z);
+  }
+  translate(width / 2, height / 2);
+  rotate(centerPoint.z * PI * 2);
+  let closestIndex = nearestPoint();
+  let progression = nearestPoint() / (Object.keys(points).length);
+  //align map
+  push();
+  translate(first.x, first.y);
+  translate(centerPoint.x, centerPoint.y);
+  scale(s);
+  rotate(r);
+  translate(-x, -y);
+
+  imageMode(CORNER);
+  image(bg, 0, 0, 1024, 1024);
+  pop();
 
   push()
   noFill();
@@ -192,46 +192,46 @@ function draw() {
   endShape();
   pop();
 
-    //draw path
-    push()
-      noFill();
-      stroke("#F1AE33");
-      strokeWeight(20);
-      beginShape();
-      for (let i = 0; i < closestIndex; i++) {
-        let p = createVector(points[i].x, points[i].z);
-        
-        p.add(centerPoint);
-        
-        // push();
-          // translate(p.x, p.y);
-          vertex(p.x, p.y);
-        // pop();
-      }
-      vertex(centerPoint.x + currentPosition.x, centerPoint.z + currentPosition.y)
-      endShape(); 
-    pop();
+  //draw path
+  push()
+  noFill();
+  stroke("#F1AE33");
+  strokeWeight(20);
+  beginShape();
+  for (let i = 0; i < closestIndex; i++) {
+    let p = createVector(points[i].x, points[i].z);
 
-    push()
-      instructions.data.forEach((instruction, i) => {
-        fill("white")
-        let p = createVector(instruction.x, instruction.y);
-        p.add(centerPoint);
-        circle(p.x, p.y, 10);
+    p.add(centerPoint);
 
-      })
-      let nearestGPSindex = nearestGPS();
-      let closestInstruction = instructions.data[nearestGPSindex]
-      let d = dist(closestInstruction.x, closestInstruction.y, currentPosition.x, currentPosition.y);
-      if (d < 20) {
-        instructions.data[nearestGPSindex].done = true
-        if (nearestGPSindex == Object.keys(instructions.data).length-1) {
-          resetProgress()
-        }
-      }
-      fill("red")
-      circle(closestInstruction.x + centerPoint.x, closestInstruction.y+ centerPoint.y, 10);
-    pop()
+    // push();
+    // translate(p.x, p.y);
+    vertex(p.x, p.y);
+    // pop();
+  }
+  vertex(centerPoint.x + currentPosition.x, centerPoint.z + currentPosition.y)
+  endShape();
+  pop();
+
+  push()
+  instructions.data.forEach((instruction, i) => {
+    fill("white")
+    let p = createVector(instruction.x, instruction.y);
+    p.add(centerPoint);
+    circle(p.x, p.y, 10);
+
+  })
+  let nearestGPSindex = nearestGPS();
+  let closestInstruction = instructions.data[nearestGPSindex]
+  let d = dist(closestInstruction.x, closestInstruction.y, currentPosition.x, currentPosition.y);
+  if (d < 20) {
+    instructions.data[nearestGPSindex].done = true
+    if (nearestGPSindex == Object.keys(instructions.data).length - 1) {
+      resetProgress()
+    }
+  }
+  fill("red")
+  circle(closestInstruction.x + centerPoint.x, closestInstruction.y + centerPoint.y, 10);
+  pop()
 
   pop();
 
@@ -269,13 +269,13 @@ function draw() {
   }
 }
 
-function resetProgress () {
+function resetProgress() {
   print("finished")
   instructions.data.forEach((instruction, i) => {
     instruction.done = false
 
   })
-  
+
 }
 
 function keyPressed() {
@@ -283,10 +283,10 @@ function keyPressed() {
   //   const date = new Date();
   //   downloadAsJSON("points" + date.getDate() + ".json");
   // }
-  if (key == 'r'){
+  if (key == 'r') {
     resetProgress();
   }
-  if (key == 'e'){
+  if (key == 'e') {
     editMode = !editMode;
   }
   if (key == "d") {
@@ -345,12 +345,12 @@ function nearestPoint() {
   return index;
 }
 
-function nearestGPS () {
+function nearestGPS() {
   let min = 100000000;
   let index = -1;
 
   instructions.data.forEach((instruction, i) => {
-    if (instruction.done) {return}
+    if (instruction.done) { return }
     let d = dist(instruction.x, instruction.y, currentPosition.x, currentPosition.y);
     if (d < min) {
       min = d;
