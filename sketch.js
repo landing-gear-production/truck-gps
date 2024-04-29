@@ -16,57 +16,66 @@ let totalLength;
 let instructions = {
   "data": [
     {
-      "instruction": "TURN RIGHT ONTO THE ROAD",
+      "instruction": "Turn right onto the road",
       "x": -112699,
       "y": -15421.2,
-      "done": false
+      "done": false,
+      "icon": "right"
     },
     {
-      "instruction": "TURN RIGHT ONTO THE ROAD",
+      "instruction": "Turn right onto the road",
       "x": -112642,
       "y": -15425.3,
-      "done": false
+      "done": false,
+      "icon": "right.svg"
     },
     {
-      "instruction": "EXIT RIGHT",
+      "instruction": "Exit Right",
       "x": -112449,
       "y": -15290.2,
-      "done": false
+      "done": false,
+      "icon": "right.svg"
     },
     {
-      "instruction": "KEEP STRAIGHT AND THEN TURN RIGHT",
+      "instruction": "Keep straight then turn right",
       "x": -111983,
       "y": -15678.6,
-      "done": false
+      "done": false,
+      "icon": "right.svg"
     },
     {
-      "instruction": "EXIT RIGHT",
+      "instruction": "Exit right",
       "x": -111700,
       "y": -15836.2,
-      "done": false
+      "done": false,
+      "icon": "right.svg"
     },
     {
-      "instruction": "STAY LEFT",
+      "instruction": "Stay left",
       "x": -111587,
       "y": -15899.1,
-      "done": false
+      "done": false,
+      "icon": "left.svg"
     },
     {
-      "instruction": "EXIT RIGHT",
+      "instruction": "Exit right",
       "x": -111885,
       "y": -16718.7,
-      "done": false
+      "done": false,
+      "icon": "right.svg"
     },
     {
-      "instruction": "TURN RIGHT",
+      "instruction": "Turn right",
       "x": -111998,
-      "y": -17035.3
+      "y": -17035.3,
+      "icon": "right.svg"
     },
     {
-      "instruction": "YOU HAVE REACHED YOUR DESTINATION",
+      "instruction": "You have reached your destination",
       "x": -111948,
       "y": -17118.2,
-      "done": false
+      "done": false,
+      "icon": "done.svg"
     },
   ]
 }
@@ -229,6 +238,7 @@ function draw() {
       resetProgress()
     }
   }
+
   fill("red")
   circle(closestInstruction.x + centerPoint.x, closestInstruction.y + centerPoint.y, 10);
   pop()
@@ -240,6 +250,11 @@ function draw() {
   bar.style.width = "" + (map(progression, 0, 1, 2, 100)) + "%";
   let distanceP = document.getElementById("distance");
   distanceP.innerHTML = "Distance left: " + Math.round(map(progression, 1, 0, 0, totalLength) * 0.000621371 * 100) / 100 + " miles";
+  let instrucIcon = document.getElementById("instructIcon");
+  instrucIcon.src = closestInstruction.icon;
+  let instructionP = document.getElementById("instructionText");
+  instructionP.innerHTML = closestInstruction.instruction;
+
   imageMode(CENTER);
   image(arrow, width / 2, height / 2, 60, 67);
   if (editMode) {
@@ -351,7 +366,7 @@ function nearestGPS() {
 
   instructions.data.forEach((instruction, i) => {
     if (instruction.done) { return }
-    let d = dist(instruction.x, instruction.y, currentPosition.x, currentPosition.y);
+    let d = dist(instruction.x, instruction.y, currentPosition.x, currentPosition.z);
     if (d < min) {
       min = d;
       index = i;
