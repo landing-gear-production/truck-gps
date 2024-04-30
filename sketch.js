@@ -20,7 +20,7 @@ let instructions = {
       "x": -112699,
       "y": -15421.2,
       "done": false,
-      "icon": "right"
+      "icon": "right.svg"
     },
     {
       "instruction": "Turn right onto the road",
