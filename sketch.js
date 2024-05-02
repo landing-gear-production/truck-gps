@@ -81,7 +81,8 @@ let instructions = {
 }
 
 function preload() {
-  bg = loadImage("map_square.png");
+  // bg = loadImage("map_square.png");
+  bg = loadImage("map_square_large.png");
   arrow = loadImage("arrow.png");
   points = loadJSON("data.json");
 
@@ -152,10 +153,10 @@ function draw() {
 
   push();
   if (editMode) {
-    // x = inputX.value();
-    // y = inputY.value();
-    // r = inputRotation.value()/512*2*Math.PI;
-    // s = 5 * inputScale.value()/255;
+    x = inputX.value();
+    y = inputY.value();
+    r = inputRotation.value()/512*2*Math.PI;
+    s = 5 * inputScale.value()/255;
   }
 
   let progress = floor(inputProgress.value() / 255 * (Object.keys(points).length - 1));
@@ -184,7 +185,7 @@ function draw() {
   translate(-x, -y);
 
   imageMode(CORNER);
-  image(bg, 0, 0, 1024, 1024);
+  image(bg, 0, 0, 1024*2, 1024*2);
   pop();
 
   push()
