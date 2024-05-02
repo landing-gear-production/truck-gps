@@ -82,7 +82,7 @@ let instructions = {
 
 function preload() {
   // bg = loadImage("map_square.png");
-  bg = loadImage("map_square_large.png");
+  bg = loadImage("map_square_large2.png");
   arrow = loadImage("arrow2.png");
   points = loadJSON("data.json");
 
