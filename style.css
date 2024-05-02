@@ -102,14 +102,16 @@
 }
 
 .instruction {
-  padding: 24px 24px 24px 80px;
+  margin: 24px 24px 24px 80px;
+  padding: 0px 30px;
   display: flex;
   position: absolute;
   top: 0;
   left: 0;
   color: white;
-
+  background-color: rgba(0, 0, 0, 0.5);
   font-family: "MuseoSans-500";
+  border-radius: 26px;
   font-size: 32px;
   font-style: normal;
   font-weight: 400;

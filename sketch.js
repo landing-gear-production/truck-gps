@@ -83,7 +83,7 @@ let instructions = {
 function preload() {
   // bg = loadImage("map_square.png");
   bg = loadImage("map_square_large.png");
-  arrow = loadImage("arrow.png");
+  arrow = loadImage("arrow2.png");
   points = loadJSON("data.json");
 
 }
@@ -185,13 +185,13 @@ function draw() {
   translate(-x, -y);
 
   imageMode(CORNER);
-  image(bg, 0, 0, 1024*2, 1024*2);
+  image(bg, -512, -512, 1024*2, 1024*2);
   pop();
 
   push()
   noFill();
   stroke("#CF202E");
-  strokeWeight(20);
+  strokeWeight(30);
   beginShape();
   for (let i = 0; i < Object.keys(points).length; i++) {
     let p = createVector(points[i].x, points[i].z);
@@ -206,7 +206,7 @@ function draw() {
   push()
   noFill();
   stroke("#F1AE33");
-  strokeWeight(20);
+  strokeWeight(30);
   beginShape();
   for (let i = 0; i < closestIndex; i++) {
     let p = createVector(points[i].x, points[i].z);
